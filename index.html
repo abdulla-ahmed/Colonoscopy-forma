@@ -366,7 +366,6 @@
     document.getElementById('date').value = new Date().toLocaleDateString();
     document.getElementById('serial-no').value = `Col-${serialNumber}`;
 // Store form image in localStorage if not already stored
-    // Store form image in localStorage if not already stored
     const imageUrl = "https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_17_09_25.png";
     if (!localStorage.getItem('watermarkimg')) {
         fetch(imageUrl)
@@ -380,6 +379,17 @@
                 reader.readAsDataURL(blob);
             });
     }
+    const imageUpload = document.getElementById('image-upload');
+    const imagesContainer = document.getElementById('images-container');
+
+    imageUpload.addEventListener('change', function () {
+        imagesContainer.innerHTML = '';
+        Array.from(imageUpload.files).forEach(file => {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            imagesContainer.appendChild(img);
+        });
+    });
 
     function generatePDF() {
     	
