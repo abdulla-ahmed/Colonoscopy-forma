@@ -367,18 +367,7 @@
     document.getElementById('serial-no').value = `Col-${serialNumber}`;
 // Store form image in localStorage if not already stored
     const imageUrl = "https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_17_09_25.png";
-    if (!localStorage.getItem('watermarkimg')) {
-        fetch(imageUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                const reader = new FileReader();
-                reader.onload = function () {
-                    const storedImage = reader.result; // Base64 representation of the image
-                    localStorage.setItem('watermarkimg', storedImage);
-                };
-                reader.readAsDataURL(blob);
-            });
-    }
+    http://localhost:2435/storage/emulated/0/Download/colonscopy/test.html
     const imageUpload = document.getElementById('image-upload');
     const imagesContainer = document.getElementById('images-container');
 
