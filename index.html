@@ -465,31 +465,32 @@
           <div class="pd"><b>Provisional Diagnosis:</b> ${document.getElementById('provisional-diagnosis').value}</div>
           </div>
         
+        
         `;
         // Append watermark image directly to pdfContent
 const watermarkimg = localStorage.getItem('watermarkimg');
 if (watermarkimg) {
     const fromDiv = document.createElement('div');
     fromDiv.style.textAlign = 'center';
-    fromDiv.style.marginTop = '20px';
+    fromDiv.style.marginTop = '-350px';
     fromDiv.style.position = 'absolute'; // Make sure it's positioned within the content
-    fromDiv.style.pageBreakBefore ='always';
+   // fromDiv.style.pageBreakBefore ='always';
     const img = document.createElement('img');
     img.src = watermarkimg;
-    img.style.width = '300px'; // Adjust the size as needed
+    img.style.width = '450px'; // Adjust the size as needed
     img.style.position = 'relative'; // or 'relative', depending on how you want it to appear
     img.style.top = '-550'; // Adjust the position, or use 'bottom', 'left', etc., based on your preference
-    img.style.left = '160%';
+    img.style.left = '120%';
     img.style.transform = 'translateX(-100%)'; // Center the image horizontally
     img.style.zIndex = '2'; // To ensure it's placed behind the text, if it's intended as a watermark
-    img.style.opacity = 0.25; 
+    img.style.opacity = 0.12; 
     img.style.float = 'none';
 
     fromDiv.appendChild(img);
     pdfContent.appendChild(fromDiv); // Append the div containing the image inside the PDF content
     
 }
-        
+
         const images = Array.from(document.querySelectorAll('#images-container img'));
         if (images.length) {
             let imagePage = document.createElement('div');
@@ -525,6 +526,7 @@ if (watermarkimg) {
                     imagePage.style.gridTemplateRows = 'repeat(4, 1fr)';
                     imagePage.style.gap = '30px';  // Same gap for consistency
                 }
+                
             });
 
             pdfContent.appendChild(imagePage);  // Add the last set of images if less than 8
