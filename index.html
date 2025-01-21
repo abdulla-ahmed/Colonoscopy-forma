@@ -351,6 +351,7 @@
                 <button type="button" class="btn-primary" onclick="generatePDF()">Download PDF</button>
                 <button type="reset" class="btn-secondary">Reset</button>
             </div>
+            
         </form>
     </div>
 
@@ -365,20 +366,32 @@
 
     document.getElementById('date').value = new Date().toLocaleDateString();
     document.getElementById('serial-no').value = `Col-${serialNumber}`;
-// Store form image in localStorage if not already stored
-    const imageUrl = "https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_17_09_25.png";
-    if (!localStorage.getItem('watermarkimg')) {
-        fetch(imageUrl)
-            .then(response => response.blob())
+
+function storeImageInLocalStorage(url, key) {
+    if (!localStorage.getItem(key)) {
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
             .then(blob => {
                 const reader = new FileReader();
                 reader.onload = function () {
-                    const storedImage = reader.result; // Base64 representation of the image
-                    localStorage.setItem('watermarkimg', storedImage);
+                    localStorage.setItem(key, reader.result); // Base64 representation
                 };
                 reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
     }
+}
+
+storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_31_29_24.png", 'sigimg');
+storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_17_09_25.png", 'watermarkimg');
+
     const imageUpload = document.getElementById('image-upload');
     const imagesContainer = document.getElementById('images-container');
 
@@ -464,32 +477,58 @@
           <div class="flex-provisional-diagnosis">
           <div class="pd"><b>Provisional Diagnosis:</b> ${document.getElementById('provisional-diagnosis').value}</div>
           </div>
-        
-        
+<p style="text-align:right;marginTop:'20px';padding:40px 45px 0px 40px;font-weight: bold;">الجراح الاستشاري&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+<p style="text-align:right;marginTop:'0px';line-height:0;padding:0px 40px ;font-weight: bold;font-size:23px;">الدكتور حيدر الكواز</p>
+
+
         `;
-        // Append watermark image directly to pdfContent
-const watermarkimg = localStorage.getItem('watermarkimg');
+        
+ const sigimg = localStorage.getItem('sigimg');
+if (sigimg) {
+    const formDiv = document.createElement('div');
+    formDiv.style.textAlign = 'center';
+    formDiv.style.marginTop = '-450px';
+    formDiv.style.position = 'absolute'; // Ensure it's within a relatively positioned container
+    
+    const pic = document.createElement('img'); // Corrected to 'img'
+    pic.src = sigimg;
+    pic.style.width = '150px'; // Adjust the size as needed
+    pic.style.position = 'relative'; // Adjust based on desired positioning
+    pic.style.top = '330px'; // Added 'px' for units
+    pic.style.left = '400%';
+    pic.style.transform = 'translateX(-100%)'; // Center the image horizontally
+    pic.style.zIndex = '3'; // Ensure correct layering
+    pic.style.opacity = '1'; 
+    pic.style.float = 'none';
+
+    formDiv.appendChild(pic);
+    pdfContent.appendChild(formDiv); // Append the div containing the image inside the PDF content
+}
+
+
+       
+   const watermarkimg = localStorage.getItem('watermarkimg');
 if (watermarkimg) {
     const fromDiv = document.createElement('div');
     fromDiv.style.textAlign = 'center';
-    fromDiv.style.marginTop = '-350px';
-    fromDiv.style.position = 'absolute'; // Make sure it's positioned within the content
-   // fromDiv.style.pageBreakBefore ='always';
-    const img = document.createElement('img');
+    fromDiv.style.marginTop = '-450px';
+    fromDiv.style.position = 'absolute'; // Ensure it's within a relatively positioned container
+    
+    const img = document.createElement('img'); // Correct usage of 'img'
     img.src = watermarkimg;
     img.style.width = '450px'; // Adjust the size as needed
-    img.style.position = 'relative'; // or 'relative', depending on how you want it to appear
-    img.style.top = '-550'; // Adjust the position, or use 'bottom', 'left', etc., based on your preference
+    img.style.position = 'relative'; // Adjust based on desired positioning
+    img.style.top = '-150px'; // Added 'px' for units
     img.style.left = '120%';
     img.style.transform = 'translateX(-100%)'; // Center the image horizontally
-    img.style.zIndex = '2'; // To ensure it's placed behind the text, if it's intended as a watermark
-    img.style.opacity = 0.12; 
+    img.style.zIndex = '2'; // Ensure correct layering
+    img.style.opacity = '0.12'; 
     img.style.float = 'none';
 
     fromDiv.appendChild(img);
     pdfContent.appendChild(fromDiv); // Append the div containing the image inside the PDF content
-    
 }
+
 
         const images = Array.from(document.querySelectorAll('#images-container img'));
         if (images.length) {
