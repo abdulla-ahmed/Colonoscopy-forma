@@ -7,10 +7,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>
        .colored-header {
-      background-color: #BDB5D5; /* Set the background color */
+      background-color:#CBB9B8 ; /* Set the background color */
        margin-bottom:1px;      /* Add spacing inside the section */
+       padding:30px 0px 0px 0px;
       width: 100%;         /* Section width */
-             
+      border-top: 1px black solid; 
+      border-right: 1px black solid; 
+      border-left: 1px black solid; 
+      border-bottom: 1px black solid; 
+      box-sizing: border-box;
        }
       .flex-container {
                 display: flex;
@@ -391,8 +396,9 @@ function storeImageInLocalStorage(url, key) {
 
 storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_31_29_24.png", 'sigimg');
 storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/signature_scanner_17_09_25.png", 'watermarkimg');
-
-    const imageUpload = document.getElementById('image-upload');
+storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/refs/heads/main/dr_hayder_kawaz.png", 'treeimg');
+   
+ const imageUpload = document.getElementById('image-upload');
     const imagesContainer = document.getElementById('images-container');
 
     imageUpload.addEventListener('change', function () {
@@ -409,12 +415,11 @@ storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/re
         const pdfContent = document.createElement('div');
          pdfContent.innerHTML = `
         <div class="colored-header">
-        <h1 style="text-align:center;line-height:1.2;">مستشفى الرافدين الاهلي</h1>
-            <h2 style="text-align: center;line-height:0;">Colonscopy Report</h2>
-      <p style= "text-align:center;line-height:0.5;">بغداد بارك السعدون مجاور مستشفى ابن النفيس</p>
-  <hr>
+        <h1 style="text-align:center;line-height:1.5;">مستشفى الرافدين الاهلي</h1>
+            <h2 style="text-align: center;line-height:1;">Colonscopy Report</h2>
+      <p style= "text-align:center;line-height:0.5;"> بغداد بارك السعدون  مجاور مستشفى ابن النفيس هاتف 07716431876</p>
           </div>
-            
+          <p style="line-height: 0.5; padding: 0; margin: 0;">&nbsp;</p>  
         
           <div class="flex-container">
             <p><b>Serial No.:</b>  ${document.getElementById('serial-no').value}</p>
@@ -436,7 +441,7 @@ storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/re
           </div>
           </div>
           
-          <h2 style="line-height:0.5;text-decoration: underline;line-height:0.5;">Procedure Findings</h2>
+          <h2 style="line-height:0.5;line-height:0.5;">Procedure Findings</h2>
            
           <div class="flex-findingpr">
             <div class="item-pr"><b>PR:</b> ${document.getElementById('pr').value}</div>
@@ -465,15 +470,15 @@ storeImageInLocalStorage("https://raw.githubusercontent.com/abdulla-ahmed/pic/re
           <div class="flex-findingcecum-ileum">
             <div class="c&i"><b>Cecum and Ileum:</b> ${document.getElementById('cecum-ileum').value}</div>
           </div>
-          <p></p>
+        <p style="line-height: 0.8; padding: 0; margin: 0;">&nbsp;</p>
            <div class="flex-biopsy">
           <div class="biopsy"><b>Biopsy:</b> ${document.getElementById('biopsy').value}</div>
           </div>
-          <p></p>
+           <p style="line-height: 0.8; padding: 0; margin: 0;">&nbsp;</p>
             <div class="flex-recommendation">
             <div class="rec"><b>Recommendation and Notes:</b> ${document.getElementById('recommendation').value}</div>
             </div>
-          <p></p>
+        <p style="line-height: 0.8; padding: 0; margin: 0;">&nbsp;</p>
           <div class="flex-provisional-diagnosis">
           <div class="pd"><b>Provisional Diagnosis:</b> ${document.getElementById('provisional-diagnosis').value}</div>
           </div>
@@ -505,7 +510,27 @@ if (sigimg) {
     pdfContent.appendChild(formDiv); // Append the div containing the image inside the PDF content
 }
 
+const treeimg = localStorage.getItem('treeimg');
+if (treeimg) {
+    const formiDiv = document.createElement('div');
+    formiDiv.style.textAlign = 'center';
+    formiDiv.style.marginTop = '-450px';
+    formiDiv.style.position = 'absolute'; // Ensure it's within a relatively positioned container
+    
+    const pict = document.createElement('img'); // Corrected to 'img'
+    pict.src = treeimg;
+    pict.style.width = '100px'; // Adjust the size as needed
+    pict.style.position = 'relative'; // Adjust based on desired positioning
+    pict.style.top = '340px'; // Added 'px' for units
+    pict.style.left = '100%';
+    pict.style.transform = 'translateX(-100%)'; // Center the image horizontally
+    pict.style.zIndex = '4'; // Ensure correct layering
+    pict.style.opacity = '1'; 
+    pict.style.float = 'none';
 
+    formiDiv.appendChild(pict);
+    pdfContent.appendChild(formiDiv); // Append the div containing the image inside the PDF content
+}
        
    const watermarkimg = localStorage.getItem('watermarkimg');
 if (watermarkimg) {
