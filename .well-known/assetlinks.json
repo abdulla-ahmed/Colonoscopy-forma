@@ -2,7 +2,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "io.github.abdulla_ahmed.twa",
-        "sha256_cert_fingerprints": ["84:99:93:54:5A:99:8C:8E:EB:B9:4E:D3:FF:7A:D4:52:11:FD:F3:2D:2E:C3:66:A9:CD:D3:A1:2A:16:D4:8A:80"]
+        "package_name": "io.github.abdulla_ahmed.ColonoscopyRH",
+        "sha256_cert_fingerprints": ["E9:5F:CE:75:27:8E:2C:C6:C3:04:60:A6:8B:7A:F8:58:6E:01:E4:EB:45:C9:8C:63:04:C7:02:4D:A6:14:B1:44"]
       }
     }]
